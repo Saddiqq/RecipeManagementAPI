@@ -1,12 +1,10 @@
 package com.example.Recipe.Management.API.Controller;
 
 import com.example.Recipe.Management.API.RequestObject.RecipeRequest;
+import com.example.Recipe.Management.API.ResponseObject.RecipeResponce;
 import com.example.Recipe.Management.API.Service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 // The `@RestController` annotation indicates that this class handles HTTP requests and returns the response as the body of the response.
 @RestController
@@ -27,4 +25,13 @@ public class RecipeController {
         recipeService.saveRecipe(recipeRequest);
         return "Success";
     }
+
+    @GetMapping(value = "/api/recipes")
+
+    // The getRecipeById method receives a GET request specifying the recipe ID.
+    public RecipeResponce getRecipeById(@RequestParam Integer recipeId){
+        return recipeService.getRecipeById(recipeId);
+    }
+
+
 }
