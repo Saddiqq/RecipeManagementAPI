@@ -1,4 +1,4 @@
 package com.example.Recipe.Management.API.Repository;
 
-public class RecipeRepository {
+public interface RecipeRepository {
 }
