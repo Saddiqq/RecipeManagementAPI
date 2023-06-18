@@ -31,7 +31,11 @@ public class RecipeService {
        Convert it to a RecipeResponse object, and return it.
  */
     }
-}
+    public void deleteRecipe(Integer recipeId) {
+        recipeRepository.deleteById(recipeId); // Delete the recipe from the database using the provided recipeId
+    }
+    }
+
 
 
 
