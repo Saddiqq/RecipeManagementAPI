@@ -5,6 +5,7 @@ import com.example.Recipe.Management.API.Repository.RecipeRepository;
 import com.example.Recipe.Management.API.RequestObject.RecipeRequest;
 import com.example.Recipe.Management.API.ResponseObject.RecipeResponce;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -37,6 +38,20 @@ public class RecipeService {
     }
     public List<Recipe> searchRecipes(String keywords) {
         return recipeRepository.findByNameContainingIgnoreCase(keywords);
+    }
+    public void updateRecipe(Integer recipeId, RecipeRequest recipeRequest) {
+        Recipe recipe = recipeRepository.findById(recipeId)
+                .orElseThrow(() -> new NotFoundException("Recipe not found with id: " + recipeId));
+
+        Recipe updatedRecipe = RecipeRequest.convertToEntity(recipe, recipeRequest);
+        updatedRecipe.setUpdatedDate(new Date());
+
+        recipeRepository.save(updatedRecipe);
+    }
+    public class NotFoundException extends RuntimeException {
+        public NotFoundException(String message) {
+            super(message);
+        }
     }
 
     }

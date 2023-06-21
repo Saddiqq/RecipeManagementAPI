@@ -52,6 +52,11 @@ public class RecipeController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(recipeResponses);
     }
+    @PutMapping("/api/recipes/{recipeId}")
+    public ResponseEntity<Void> updateRecipe(@PathVariable Integer recipeId, @RequestBody RecipeRequest recipeRequest) {
+        recipeService.updateRecipe(recipeId, recipeRequest);
+        return ResponseEntity.ok().build();
+    }
 
 
 }
