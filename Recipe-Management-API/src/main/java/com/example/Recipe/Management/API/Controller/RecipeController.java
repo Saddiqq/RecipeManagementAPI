@@ -1,5 +1,6 @@
 package com.example.Recipe.Management.API.Controller;
 
+import com.example.Recipe.Management.API.Model.Recipe;
 import com.example.Recipe.Management.API.Repository.RecipeRepository;
 import com.example.Recipe.Management.API.RequestObject.RecipeRequest;
 import com.example.Recipe.Management.API.ResponseObject.RecipeResponce;
@@ -7,6 +8,9 @@ import com.example.Recipe.Management.API.Service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 // The `@RestController` annotation indicates that this class handles HTTP requests and returns the response as the body of the response.
@@ -40,4 +44,14 @@ public class RecipeController {
         recipeRepository.deleteById(recipeId); // Delete the recipe from the database using the provided recipeId
         return ResponseEntity.noContent().build();  // Return a ResponseEntity with a No Content (204) status code indicating successful deletion
     }
+    @GetMapping("/api/recipes/search")
+    public ResponseEntity<List<RecipeResponce>> searchRecipes(@RequestParam("keywords") String keywords) {
+        List<Recipe> recipes = recipeService.searchRecipes(keywords);
+        List<RecipeResponce> recipeResponses = recipes.stream()
+                .map(RecipeResponce::convertToResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(recipeResponses);
+    }
+
+
 }

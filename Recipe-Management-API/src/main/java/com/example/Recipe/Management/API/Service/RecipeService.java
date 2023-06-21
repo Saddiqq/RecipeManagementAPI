@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class RecipeService {
@@ -34,6 +35,10 @@ public class RecipeService {
     public void deleteRecipe(Integer recipeId) {
         recipeRepository.deleteById(recipeId); // Delete the recipe from the database using the provided recipeId
     }
+    public List<Recipe> searchRecipes(String keywords) {
+        return recipeRepository.findByNameContainingIgnoreCase(keywords);
+    }
+
     }
 
 
